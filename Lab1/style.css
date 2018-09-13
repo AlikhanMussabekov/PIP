@@ -1,0 +1,140 @@
+body{
+	margin: 0px;
+}
+
+.title{
+	font-size: 35px;
+	font-style: italic;
+	color: white;
+	background-color: #1976D2;
+	text-align: center;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.megaBlock{
+
+	padding-top: 10px;
+	display: grid;
+	justify-content: center;
+}
+
+.blockText{
+	color: white;
+	margin-left: 10px;
+}
+
+.frame{
+	margin-top: 10px;
+	border: 0px;
+	width: 1200px;
+	/*height: 400px;*/
+}
+
+.block{
+	background-color: #1976D2;
+	margin: 10px;
+	width: 400px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	display: flex;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5); 
+	border-radius: 5px;
+}
+
+.changeValueButton{
+	border: 1px solid white;
+	border-radius: 5px;
+	color: #1976D2
+}
+
+.buttonBlock{
+	margin: 0 auto;
+}
+
+.input{
+	width: 30px;
+	border: 1px solid white;
+	border-radius: 5px;
+	text-align: center;
+}
+
+.inputBlock{
+	margin: 0 auto;
+	padding-left: 20px;
+}
+
+.submitButton{
+	width: 150px;
+	height: 50px;
+	font-size: 15px;
+	background-color: white;
+    color: #1976D2;
+    border: 2px solid #1976D2; 
+    border-radius: 5px;
+    -webkit-transition-duration: 0.3s; /* Safari */
+    transition-duration: 0.3s;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.submitButton:hover{
+	@extend .submitButton;
+	background-color: #1976D2;
+	color: white;
+}
+
+table{
+	
+	vertical-align: middle;
+	margin: 0 auto;
+	border-radius: 5px;
+	border-collapse: collapse;
+	background-color: #1976D2;
+	color: white;
+}
+
+#tableContainer-1 {
+    height: 100%;
+    width: 100%;
+    display: table;
+  }
+
+#tableContainer-2 {
+    vertical-align: middle;
+    display: table-cell;
+    height: 100%;
+}
+
+td{
+	text-align: center;
+	width: 15%;
+	font-size: 20px;
+}
+
+td.true{
+	color: rgba(0,255,0,0.9);
+}
+
+td.false{
+	color: rgba(255,0,0,0.9);
+}
+
+tr{
+	height: 50px;
+}
+
+tr:nth-child(even) {
+	background-color: #1565C0;
+}
+
+table.true{
+	box-shadow: 0 0 20px rgba(0,255,0,0.9);
+}
+
+table.false{
+	box-shadow: 0 0 20px rgba(255,0,0,0.9);
+}
+
+
+
+
+
