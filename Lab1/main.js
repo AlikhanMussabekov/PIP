@@ -43,19 +43,44 @@ function iframeLoaded() {
 
 function validate(){
 
-	checkY = document.getElementById("yLabel").value
+	yDiv = document.getElementById("yBlock");
+	yLabel = document.getElementById("yLabel");
+	checkY = yLabel.value;
 
+	/*
 	if(!isNaN(checkY)){
-		if (checkY < -3 || checkY > 3){
-			alert("Координата Y должна лежать в диапазоне {-3 ... 3}");
-			window.open("server.php", "theFrame");
-			return false;
-		}else {
-			return true;
-		}
+		
 	}
 	else {
 			alert("Координата Y не может быть символом");
 			return false;
+	}*/
+
+	var result = checkY.match(/^[+-]?[0123]{0,1}([\.\,]\d+)?$/);
+
+	if (result)
+	{
+
+		if (checkY < -3 || checkY > 3){
+			
+			yDiv.style.backgroundColor = 'red'
+
+			return false;
+		}else {
+			yLabel.style.borderColor = 'white';
+
+			yDiv.style.backgroundColor = '#1976D2';
+
+			return true;
+		}
+	}else {
+
+		yDiv.style.backgroundColor = 'red'
+
+		return false;
 	}
+
 }
+
+
+

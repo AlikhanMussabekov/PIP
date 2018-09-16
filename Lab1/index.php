@@ -1,10 +1,6 @@
-<!DOCTYPE html>
+<?php session_start(); ?>
 
-<?php
-    
-    session_start();
-    
-?>
+<!DOCTYPE html>
 
 <html>
 
@@ -40,14 +36,14 @@
 
                 </div>
 
-                <div class="block">
+                <div class="block" id="yBlock">
 
                     <div class="blockText">
                         Координата Y (диапазон от -3 до 3):
                     </div>
 
                     <div class="inputBlock">
-                        <input class="input" id="yLabel" type="text" name="y"  maxlength="10">
+                        <input class="input" id="yLabel" type="text" name="y" maxlength="10">
                     </div>
 
                 </div>

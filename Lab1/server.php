@@ -1,5 +1,7 @@
 <?php
 
+//https://youtu.be/PilI7T4soFw?t=21m51s
+
 	session_start();
 
  	$time_pre = microtime(true);
@@ -11,53 +13,70 @@
 		session_regenerate_id();
 
  		$x = intval($_POST["x"]); 
-		$y = floatval($_POST["y"]); 
+		$y = floatval(str_replace(",", ".", $_POST["y"])); 
 		$r = floatval($_POST["r"]); 
 
 		
 		$check = false;
 		$result = "Не лежит";
 
- 		if ($x<=0 && $y>=0){
+		if (!(is_numeric($x) && is_numeric($y) && is_numeric($r))) {
 
- 			if($x >= (0-$r) && $y <= $r){
- 				$result = "Лежит";
- 				$check = true;
- 			}
+        	array_push ($_SESSION['arr'],"<tr> <td colspan='6'><b>ОШИБКА1</b></td> </tr>");
 
- 		}elseif($x >= 0 && $y >= 0){
+    	}
+    	elseif (  ($x<(-3)) || ($x>5)  ||  ($y<(-3)) || ($y>3)  ||  ($r<1) || ($r > 3)  ) {
 
- 			$count = 4 * ($x*$x + $y*$y);
+    		array_push ($_SESSION['arr'],"<tr> <td colspan='6'><b>ОШИБКА2</b></td> </tr>");
 
- 			if($count <= $r*$r){
- 				$result = "Лежит";
- 				$check = true;
- 			}
+    	} 
+    	else {
 
- 		}elseif($x>=0 && $y<=0){
+	 		if ($x<=0 && $y>=0){
 
- 			$rad=$r/2;
+	 			if($x >= (0-$r) && $y <= $r){
+	 				$result = "Лежит";
+	 				$check = true;
+	 			}
 
- 			$count = (-3 - $rad)*$x + (0 - $rad)*$y + (0-($rad*(-3)));
+	 		}elseif($x >= 0 && $y >= 0){
 
-			if($count<=0){
-				$result = "Лежит";
-				$check = true;
-			}
+	 			$count = 4 * ($x*$x + $y*$y);
 
- 		}
+	 			if($count <= $r*$r){
+	 				$result = "Лежит";
+	 				$check = true;
+	 			}
 
- 		$date = date('h:i:s a', time());
- 		$time = stop() - $time_pre;
+	 		}elseif($x>=0 && $y<=0){
 
- 		array_push($_SESSION['arr'], "<tr> <td>$x</td> <td>$y</td> <td>$r</td>
+	 			$rad=$r/2;
+
+	 			$count = (-3 - $rad)*$x + (0 - $rad)*$y + (0-($rad*(-3)));
+
+				if($count<=0){
+					$result = "Лежит";
+					$check = true;
+				}
+
+	 		}
+
+	 		$date = date('h:i:s a', time());
+ 			$time = stop() - $time_pre;
+
+
+			array_push($_SESSION['arr'], "<tr> <td>$x</td> <td>$y</td> <td>$r</td>
                      <td>$date</td> <td>$time</td> <td>$result</td></tr>");
 
+ 		}
+
+	}else{
+		array_push ($_SESSION['arr'],"<tr> <td colspan='6'><b>ОШИБКА</b></td> </tr>");
 	}	
  		
- 		function stop(){
- 			return microtime(true);
- 		}
+	function stop(){
+		return microtime(true);
+	}
 
 ?>
 

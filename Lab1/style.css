@@ -1,5 +1,6 @@
 body{
 	margin: 0px;
+	/*height: 100%;*/
 }
 
 .title{
@@ -26,7 +27,7 @@ body{
 .frame{
 	margin-top: 10px;
 	border: 0px;
-	width: 1200px;
+	width: 60%;
 	/*height: 400px;*/
 }
 
