@@ -1,45 +1,74 @@
 body{
 	margin: 0px;
-	/*height: 100%;*/
 }
 
 .title{
+	min-width: 100%;
 	font-size: 35px;
 	font-style: italic;
+	padding-left: 10px;
+	padding-right: 10px;
 	color: white;
+	margin: 0 auto;
 	background-color: #1976D2;
-	text-align: center;
-	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	box-shadow: 0 0 10px rgba(0,0,0,1);
+}
+
+ul {
+    text-align: right;
+    list-style: none;
+    margin-top: -35px;
+}
+
+ul li {
+    display: inline-block;
+    padding-left: 10px;
+}
+
+ul li:last-child{
+    padding-right: 20px;
+}
+
+table{
+	margin: 3em;
 }
 
 .megaBlock{
-
 	padding-top: 10px;
 	display: grid;
 	justify-content: center;
+	vertical-align: middle;
+}
+
+.chartBlock{
+	display: inline-block;
+	text-align: left;
 }
 
 .blockText{
 	color: white;
-	margin-left: 10px;
+	font-size: 15pt;
 }
 
-.frame{
-	margin-top: 10px;
+iframe{
+	margin-top: 30px;
 	border: 0px;
 	width: 60%;
-	/*height: 400px;*/
 }
 
 .block{
 	background-color: #1976D2;
 	margin: 10px;
+	height: 60px;
 	width: 400px;
 	padding-top: 20px;
 	padding-bottom: 20px;
 	display: flex;
-	box-shadow: 0 0 10px rgba(0,0,0,0.5); 
+	box-shadow: 0 0 10px rgba(0,0,0,0.7); 
 	border-radius: 5px;
+	display: grid;
+	justify-content: center;
+	align-items: center;
 }
 
 .changeValueButton{
@@ -53,15 +82,15 @@ body{
 }
 
 .input{
-	width: 30px;
+	width: 40px;
 	border: 1px solid white;
 	border-radius: 5px;
 	text-align: center;
+	font-size: 10pt;
 }
 
 .inputBlock{
 	margin: 0 auto;
-	padding-left: 20px;
 }
 
 .submitButton{
@@ -83,7 +112,7 @@ body{
 	color: white;
 }
 
-table{
+.resultTable{
 	
 	vertical-align: middle;
 	margin: 0 auto;
