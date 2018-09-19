@@ -7,6 +7,7 @@
     <head>
         <meta charset="utf-8">
         <script type="text/javascript" src="./main.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="./style.css">
         <title>PHP</title>
     </head>
@@ -36,7 +37,7 @@
 
         </div>
 
-        <form method="post" action="server.php" target="theFrame">
+        <form id="form" method="post" action="server.php" target="theFrame">
             
             <table class="mainTable" >
                 <tr>
@@ -45,7 +46,7 @@
                             <div class="block">
                                 
                                 <div class="blockText">
-                                    Координата X (диапазон от -3 до 5):
+                                    Координата X (диапазон от -3 до 5)
                                 </div>
 
                                 <div class="inputBlock" >
@@ -59,7 +60,7 @@
                             <div class="block" id="yBlock">
 
                                 <div class="blockText">
-                                    Координата Y (диапазон от -3 до 3):
+                                    Координата Y (диапазон от -3 до 3)
                                 </div>
 
                                 <div class="inputBlock">
@@ -71,7 +72,7 @@
                             <div class="block">
 
                                 <div class="blockText">
-                                    Параметр R (диапазон от 1 до 3):
+                                    Параметр R (диапазон от 1 до 3)
                                 </div>
 
                                 <div class="inputBlock">
@@ -99,6 +100,7 @@
                     <td>
                         <div class="chartBlock">
                                 <!-- <img src="./areas.png" width="350" height="350"> -->
+                                <!-- <video id="video" src="./media/nani.mp4" controls="false"></video> -->
                                 <canvas width="350" height="350" id="canvas"></canvas>
                         </div>
                     </td>

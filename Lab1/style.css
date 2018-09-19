@@ -4,20 +4,21 @@ body{
 
 .title{
 	min-width: 100%;
-	font-size: 35px;
-	font-style: italic;
+	font-family: 'Montserrat' , sans-serif;
+	font-size: 2em;
+	font-style: italic; 
 	padding-left: 10px;
 	padding-right: 10px;
 	color: white;
 	margin: 0 auto;
 	background-color: #1976D2;
-	box-shadow: 0 0 10px rgba(0,0,0,1);
+	box-shadow: 0 0 10px rgba(0,0,0,0.7);
 }
 
 ul {
     text-align: right;
     list-style: none;
-    margin-top: -35px;
+    margin-top: -30px;
 }
 
 ul li {
@@ -27,6 +28,16 @@ ul li {
 
 ul li:last-child{
     padding-right: 20px;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%
+}
+
+.sticky + .content {
+  padding-top: 102px;
 }
 
 table{
@@ -47,6 +58,7 @@ table{
 
 .blockText{
 	color: white;
+	font-family: 'Montserrat', sans-serif;
 	font-size: 15pt;
 }
 
@@ -96,6 +108,7 @@ iframe{
 .submitButton{
 	width: 150px;
 	height: 50px;
+	font-family: 'Montserrat', sans-serif;
 	font-size: 15px;
 	background-color: white;
     color: #1976D2;
@@ -135,6 +148,7 @@ iframe{
 }
 
 td{
+	font-family: 'Montserrat', sans-serif;
 	text-align: center;
 	width: 15%;
 	font-size: 20px;
