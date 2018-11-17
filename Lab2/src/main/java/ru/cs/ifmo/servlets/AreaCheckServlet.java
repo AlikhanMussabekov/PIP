@@ -36,21 +36,26 @@ public class AreaCheckServlet extends HttpServlet {
 			point.setDate(new Date());
 			point.setResult("Не лежит");
 
-			if (x >= 0 && y >= 0){
+			if (x >= 0 && y >= 0 ){
 
-				if(checkTriangle(x,y,r)){
+				double negHalfX = x/(-2.0);
+				double halfR = r/(2.0);
+
+				if( y<=(negHalfX+halfR) ){
 					point.setResult("Лежит");
 				}
 
-			}else if(x >= 0 && y<=0){
+			}else if( x >= 0 && y<=0 ) {
 
-				if(checkRectangle(x,y,r)){
+				double negHalfR = r/(-2.0);
+
+				if(x<=r && y>=negHalfR){
 					point.setResult("Лежит");
 				}
 
 			}else if(x<=0 && y>=0){
 
-				if(checkArc(x,y,r)){
+				if(x*x + y*y <= r*r){
 					point.setResult("Лежит");
 				}
 
@@ -60,32 +65,10 @@ public class AreaCheckServlet extends HttpServlet {
 
 		point.setWorkTime(new Date().getTime()-time);
 
-		Model model = Model.getInstance();
-		model.add(point);
-		req.setAttribute("list",  model.list());
+		((Model)req.getSession().getAttribute("results")).add(point);
 
 		RequestDispatcher requestDispatcher = req.getRequestDispatcher("result.jsp");
 		requestDispatcher.forward(req, resp);
 
-		/*PrintWriter writer = resp.getWriter();
-		writer.write(x + " " + y + " time: " + (new Date().getTime()-time) + "мс");*/
-
 	}
-
-	private boolean checkArc(double x, double y, int r){
-
-		return x*x + y*y <= r*r;
-
-	}
-
-	private boolean checkTriangle(double x, double y, int r){
-
-		return y<=((-x/2)+r/2);
-
-	}
-
-	private boolean checkRectangle(double x, double y, int r){
-		return (x<=r && y>=(-r/2));
-	}
-
 }

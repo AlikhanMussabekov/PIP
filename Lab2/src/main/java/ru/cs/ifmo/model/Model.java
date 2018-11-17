@@ -8,23 +8,23 @@ import java.util.stream.Collectors;
 
 public class Model {
 
-	private static Model instance = new Model();
+	{
+		model = new ArrayList<Point>();
+	}
 
 	private List<Point> model;
 
-	public static Model getInstance() {
-		return instance;
-	}
-
-	private Model() {
-		model = new ArrayList<>();
-	}
+	public Model() {}
 
 	public void add(Point point){
 		model.add(point);
 	}
 
-	public List<Point> list(){
+	public List<Point> getPoints(){
 		return model;
+	}
+
+	public void setPoints(List<Point> model){
+		this.model = model;
 	}
 }

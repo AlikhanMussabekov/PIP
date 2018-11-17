@@ -25,7 +25,7 @@
 /.nb-gradle/
 
 ### Maven ###
-.lib
+lib
 .mvn
 mvnw
 mvnw.cmd

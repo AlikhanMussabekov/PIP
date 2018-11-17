@@ -1,5 +1,7 @@
 package ru.cs.ifmo.servlets;
 
+import ru.cs.ifmo.model.Model;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,19 +20,18 @@ public class ControllerServlet extends HttpServlet {
 		String y = req.getParameter("y");
 		String r = req.getParameter("r");
 
-		if(x!=null && y!=null && r!=null){
+		if(x == null || y == null || r == null){
 
-			req.setAttribute("time", new Date().getTime());
-
-			RequestDispatcher requestDispatcher = req.getRequestDispatcher("/check");
-			requestDispatcher.forward(req, resp);
-
-		}else{
-
-			PrintWriter writer = resp.getWriter();
-			writer.write("Координаты не переданы");
-
+			req.getRequestDispatcher("index.jsp").forward(req, resp);
+			return;
 		}
+
+		if(req.getSession().getAttribute("results") == null){
+			req.getSession().setAttribute("results", new Model());
+		}
+
+		req.setAttribute("time", new Date().getTime());
+		req.getRequestDispatcher("/check").forward(req, resp);
 
 	}
 }

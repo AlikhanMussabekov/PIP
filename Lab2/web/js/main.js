@@ -4,22 +4,41 @@ var x;
 var y;
 var state = false;
 
-document.addEventListener("DOMContentLoaded", function(event) {
-	
+$(document).ready(function(){
 	plot_canvas = document.getElementById("canvas");
     plot_context = plot_canvas.getContext("2d");
     var rr = document.getElementById("r");
     draw();
-});
 
-function iframeLoaded() {
-      var iFrameID = document.getElementById('theFrame');
-      if(iFrameID) {
-            
-            iFrameID.height = "";
-            iFrameID.height = iFrameID.contentWindow.document.body.scrollHeight + "px";
-      }   
-}
+	$(".resultTable tr").click(function() {
+
+		event.currentTarget.style.backgroundColor = "grey";
+
+		let values = $(event.currentTarget).find("td").toArray();
+
+		x = values[0].innerText;
+		y = values[1].innerText;
+		let rSelect = document.getElementById("r");
+		let R = rSelect.options[rSelect.selectedIndex].value;
+
+		alert(x + " " + y + " " + R);
+
+		x = x*100/R;
+		y = y*100/R;
+
+		y *= -1;
+
+		x += 150;
+		y += 150;
+
+
+		plot_context.beginPath();
+		plot_context.fillStyle = 'black';
+		plot_context.fillRect(x, y, 5, 5);
+
+	});
+
+});
 
 function draw(){
 
@@ -29,7 +48,7 @@ function draw(){
     plot_context.closePath();
 
     plot_context.rect(150, 150, 100, 50);
-    plot_context.fillStyle = 'blue';
+    plot_context.fillStyle = '#1976D2';
     plot_context.fill();
 
     plot_context.beginPath();
@@ -38,7 +57,7 @@ function draw(){
     plot_context.lineTo(250, 150);
     plot_context.lineTo(150, 150);
     plot_context.closePath();
-    plot_context.fillStyle = 'blue';
+    plot_context.fillStyle = '#1976D2';
     plot_context.fill();
 
 	plot_context.beginPath();
@@ -59,51 +78,83 @@ function draw(){
 	plot_context.closePath();
 	plot_context.stroke();
 
+	//r r/2 y
+	plot_context.fillStyle = 'black';
+	plot_context.beginPath();
+	plot_context.moveTo(145,50);
+	plot_context.lineTo(155,50);
+	plot_context.stroke();
+
+	plot_context.moveTo(145,100);
+	plot_context.lineTo(155,100);
+	plot_context.stroke();
+
+	plot_context.moveTo(145,200);
+	plot_context.lineTo(155,200);
+	plot_context.stroke();
+
+	plot_context.moveTo(145,250);
+	plot_context.lineTo(155,250);
+	plot_context.stroke();
+
+	//r r/2 x
+	plot_context.moveTo(50,145);
+	plot_context.lineTo(50,155);
+	plot_context.stroke();
+
+	plot_context.moveTo(100,145);
+	plot_context.lineTo(100,155);
+	plot_context.stroke();
+
+	plot_context.moveTo(200,145);
+	plot_context.lineTo(200,155);
+	plot_context.stroke();
+
+	plot_context.moveTo(250,145);
+	plot_context.lineTo(250,155);
+	plot_context.stroke();
+
+	//chars
+	plot_context.beginPath();
+	plot_context.font = "13px Montserrat";
+
+	plot_context.fillText("Y",130,35);
+	plot_context.fillText("R",160,55);
+	plot_context.fillText("R/2",160,105);
+	plot_context.fillText("0",140,165);
+	plot_context.fillText("-R/2",120,195);
+	plot_context.fillText("-R",130,245);
+
+	plot_context.fillText("-R",50,165);
+	plot_context.fillText("-R/2",100,165);
+	plot_context.fillStyle = 'white';
+	plot_context.fillText("R/2",200,165);
+	plot_context.fillStyle = 'black';
+	plot_context.fillText("R",250,165);
+	plot_context.fillText("X",270,165);
+
+
     plot_canvas.addEventListener("click", drawPoint, false);
-  
-	/*pic = new Image();
-	pic.src = './media/areas.png';
-	pic.onload = function(){
-		ctx.drawImage(pic,0,0,canvas.width, canvas.height);
-	}*/
 }
 
 
 function validate(){
 
-	yDiv = document.getElementById("yBlock");
-	xDiv = document.getElementById("xBlock");
-	yLabel = document.getElementById("yLabel");
-	checkX = document.querySelector('input[name="x"]:checked').value;
-	checkY = yLabel.value;
+	let yDiv = document.getElementById("yBlock");
+	let xDiv = document.getElementById("xBlock");
+	let yLabel = document.getElementById("yLabel");
+	let checkX = document.querySelector('input[name="x"]:checked').value;
+	let checkY = yLabel.value;
 
-	if (checkY == "PARTY") {
-		var confettiSettings = {
-			"target": "canvas",
-			"max": "100",
-			"size": "2",
-			"animate": true,
-			"props": ["circle", "square", "triangle", "line"],
-			"colors": [[165, 104, 246], [230, 61, 135], [0, 199, 228], [253, 214, 126]],
-			"clock": "30",
-			"rotate": false,
-			"width": "300",
-			"height": "300"
-		};
-		var confetti = new ConfettiGenerator(confettiSettings);
+	if (checkY === "party") {
 
-		if(!state) {
-			confetti.render();
+		if (!state){
+			RestartConfetti();
 			state = true;
-		}
-		else{
-			confetti.clear();
+		}else{
+			StopConfetti();
 			state = false;
-			//draw();
 		}
-		/*setTimeout(confetti.clear(), 10 * 1000);
-
-		draw();*/
 
 		return false;
 	}
@@ -112,7 +163,7 @@ function validate(){
 
 	if (result)
 	{
-		if (checkY < -5 || checkY > 5 || checkY==""){
+		if (checkY < -5 || checkY > 5 || checkY===""){
 			
 			yDiv.style.backgroundColor = 'red'
 
@@ -141,7 +192,8 @@ function drawPoint(e) {
 		var cell = getCursorPosition(e);
 
 		plot_context.beginPath();
-		plot_context.rect(x, y, 5, 5);
+		plot_context.fillStyle = 'black';
+		plot_context.fillRect(x, y, 5, 5);
 
 		x -= 150;
 		y -= 150;
@@ -149,26 +201,10 @@ function drawPoint(e) {
 		x = x/100*R;
 		y = y/100*R;
 
-		$.ajax({
-			type:'get',
-			url:'controller',
-			data:{'x':x, 'y':y, 'r':R},
-			response:'text',
-			error: function (message) {
-				console.log(message);
+		$("[name='x']").val(x);
+		$("[name='y']").val(y);
 
-				alert("Error " + message);
-			},
-			success:function (data) {
-				console.log(data);
-
-				var ifr = document.getElementById('theFrame').contentDocument;
-				ifr.open();
-				ifr.writeln(data);
-				ifr.close();
-
-			}
-		});
+		document.getElementById("form").submit();
 
     }
 
@@ -177,4 +213,3 @@ function getCursorPosition(e) {
 	x = e.clientX - rect.left;
 	y = e.clientY - rect.top
 }
-

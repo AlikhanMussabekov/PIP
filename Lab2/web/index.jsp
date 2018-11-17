@@ -1,14 +1,20 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="ru.cs.ifmo.entities.Point" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.io.PrintWriter" %>
+<%@ page import="ru.cs.ifmo.model.Model" %>
+<jsp:useBean id="results" class="ru.cs.ifmo.model.Model" scope="session"/>
+
 <!DOCTYPE html>
 
 <html>
 
 <head>
 	<meta charset="utf-8">
-	<script type="text/javascript" src="./js/main.js"></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 	<script type="text/javascript" src="./js/confetti.js"></script>
-
+	<script type="text/javascript" src="./js/main.js"></script>
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="./css/style.css">
 	<title>Servlet</title>
@@ -38,8 +44,7 @@
 	</ul>
 
 </div>
-
-<form id="form" method="get" action="controller" target="theFrame">
+<form id="form" method="get" action="controller">
 
 	<table class="mainTable" >
 		<tr>
@@ -134,9 +139,44 @@
 
 </form>
 
-<div align="center">
+<%--<div align="center">
 	<iframe id="theFrame" name="theFrame" onload="iframeLoaded()"></iframe>
-</div>
+</div>--%>
+
+<table class="resultTable">
+	<c:if test="${results.getPoints().size() != 0}">
+		<tr>
+			<td>x</td>
+			<td>y</td>
+			<td>r</td>
+			<td>Время</td>
+			<td>Время работы</td>
+			<td>Результат</td>
+		</tr>
+
+		<c:forEach items="${results.getPoints()}" var="point">
+			<tr>
+				<td>${point.getX()}</td>
+				<td>${point.getY()}</td>
+				<td>${point.getR()}</td>
+				<td>${point.getDate()}</td>
+				<td>${point.getWorkTime()} мс</td>
+
+				<c:choose>
+					<c:when test="${point.getResult() == 'Лежит'}">
+						<td class="true">${point.getResult()}</td>
+					</c:when>
+
+					<c:otherwise>
+						<td class="false">${point.getResult()}</td>
+					</c:otherwise>
+
+				</c:choose>
+			</tr>
+		</c:forEach>
+	</c:if>
+</table>
+<canvas class="confetti" id="confetti"></canvas>
 </body>
 
 </html>
