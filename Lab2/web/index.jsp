@@ -176,7 +176,6 @@
 		</c:forEach>
 	</c:if>
 </table>
-<canvas class="confetti" id="confetti"></canvas>
 </body>
 
 </html>

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -66,6 +67,8 @@ public class AreaCheckServlet extends HttpServlet {
 		point.setWorkTime(new Date().getTime()-time);
 
 		((Model)req.getSession().getAttribute("results")).add(point);
+
+		req.getSession().setAttribute("point",point);
 
 		RequestDispatcher requestDispatcher = req.getRequestDispatcher("result.jsp");
 		requestDispatcher.forward(req, resp);

@@ -1,6 +1,7 @@
 body{
 	margin: 0px;
 	background: transparent;
+	text-align: center;
 }
 
 .title{
@@ -60,8 +61,24 @@ ul li:last-child{
 }
 
 
+#tableContainer-1 {
+	height: 100%;
+	width: 100%;
+	display: table;
+}
+#tableContainer-2 {
+	vertical-align: middle;
+	display: table-cell;
+	height: 100%;
+}
+
 table{
 	margin: 3em;
+}
+
+table.center{
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .megaBlock{
@@ -120,6 +137,26 @@ iframe{
 	margin: 0 auto;
 }
 
+.back_button{
+	width: 150px;
+	height: 40px;
+	font-family: 'Montserrat', sans-serif;
+	text-align: center;
+	background-color: white;
+	border: 2px solid rgba(255, 255, 255, 0);
+	border-radius: 5px;
+	box-shadow: 0 0 10px  rgba(0,0,0,0.5);
+	-webkit-transition-duration: 0.3s; /* Safari */
+	transition-duration: 0.3s;
+}
+
+.back_button:hover{
+	@extend .back_button;
+	background-color: #3aa2ff;
+	box-shadow: 0 0 5px -5px rgba(0, 0, 0, 0.3);
+	color: white;
+}
+
 .submitButton{
 	width: 150px;
 	height: 50px;
@@ -159,10 +196,7 @@ td{
 	font-size: 20px;
 }
 
-.back_button{
-	font-family: 'Montserrat', sans-serif;
-	text-align: center;
-}
+
 
 td.true{
 	color: rgba(0,255,0,0.9);
