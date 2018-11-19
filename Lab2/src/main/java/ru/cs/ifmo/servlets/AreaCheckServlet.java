@@ -23,7 +23,7 @@ public class AreaCheckServlet extends HttpServlet {
 		double x = Double.valueOf(req.getParameter("x"));
 		double y = Double.valueOf(req.getParameter("y").replace(",","."));
 		int r = Integer.valueOf(req.getParameter("r"));
-		long time = (long) req.getAttribute("time");
+		long time = (Long) req.getAttribute("time");
 
 		Point point = new Point();
 
