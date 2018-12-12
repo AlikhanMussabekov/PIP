@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jstl="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <title>Lab3</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i" rel="stylesheet"/>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+        <h:outputStylesheet name="style.css" library="css"/>
+        <h:outputScript name="main.js" library="js"/>
+        <h:outputScript />
+    </h:head>
+
+    <h:body>
+
+        <h:form id="form" rendered="true">
+            <table class="mainTable" >
+                <tr>
+                    <td>
+                        <div class="megaBlock">
+                            <div class="block">
+
+                                <div class="blockText">
+                                    Координата X (диапазон от -4 до 4)
+                                </div>
+
+                                <div class="inputBlock" >
+
+                                    <h:selectBooleanCheckbox id="xMinus4" value="#{points.arrX[0]}" name="x" styleClass="checkbox">-4</h:selectBooleanCheckbox>
+
+                                    <h:selectBooleanCheckbox id="xMinus3" value="#{points.arrX[1]}" name="x" styleClass="checkbox">-3</h:selectBooleanCheckbox>
+
+                                    <h:selectBooleanCheckbox id="xMinus2" value="#{points.arrX[2]}" name="x" styleClass="checkbox">-2</h:selectBooleanCheckbox>
+
+                                    <h:selectBooleanCheckbox id="xMinus1" value="#{points.arrX[3]}" name="x" styleClass="checkbox">-1</h:selectBooleanCheckbox>
+
+                                    <h:selectBooleanCheckbox id="x0" value="#{points.arrX[4]}" name="x" styleClass="checkbox" >0</h:selectBooleanCheckbox>
+
+                                    <h:selectBooleanCheckbox id="x1" value="#{points.arrX[5]}" name="x" styleClass="checkbox">1</h:selectBooleanCheckbox>
+
+                                    <h:selectBooleanCheckbox id="x2" value="#{points.arrX[6]}" name="x" styleClass="checkbox">2</h:selectBooleanCheckbox>
+
+                                    <h:selectBooleanCheckbox id="x3" value="#{points.arrX[7]}" name="x" styleClass="checkbox">3</h:selectBooleanCheckbox>
+
+                                    <h:selectBooleanCheckbox id="x4" value="#{points.arrX[8]}" name="x" styleClass="checkbox">4</h:selectBooleanCheckbox>
+
+                                </div>
+                                <h:inputHidden id="xLabel" value="#{points.canvasXStr}"/>
+                            </div>
+
+                            <div class="block" id="yBlock">
+
+                                <div class="blockText">
+                                    Координата Y (диапазон от -5 до 5)
+                                </div>
+
+                                <div class="inputBlock">
+                                    <h:inputText styleClass="input" id="yLabel" name="y" value="#{points.yStr}" title="title" maxlength="10" required="true"
+                                                  >
+                                        <f:validateDoubleRange minimum="-5" maximum="5"/>
+                                    </h:inputText>
+                                </div>
+                                <h:message for = "yLabel" style = "color:red" />
+
+                            </div>
+
+                            <div class="block">
+
+                                <div class="blockText">
+                                    Параметр R (диапазон от 1 до 5 )
+                                </div>
+
+                                <div class="inputBlock">
+
+                                    <h:selectOneMenu id="r" value="#{points.rStr}" onchange="setR(this.value)">
+                                        <f:selectItem itemValue="1" itemLabel="1"/>
+                                        <f:selectItem itemValue="2" itemLabel="2"/>
+                                        <f:selectItem itemValue="3" itemLabel="3"/>
+                                        <f:selectItem itemValue="4" itemLabel="4"/>
+                                        <f:selectItem itemValue="5" itemLabel="5"/>
+                                    </h:selectOneMenu>
+
+                                </div>
+
+                            </div>
+
+                            <div class="buttonBlock">
+                                <h:commandButton id="submitButton" type="submit" styleClass="submitButton"
+                                                 value="Проверить" action="#{points.addPoint()}"/>
+
+                            </div>
+
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="chartBlock">
+                            <canvas width="300" height="300" id="canvas"></canvas>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        </h:form>
+
+
+
+        <table class="resultTable">
+
+            <tr>
+                <td colspan="5">
+                    <div align="center">
+                        <h:form>
+                            <h:commandButton action="index?faces-redirect=true" value="Вернуться на главную"
+                                             styleClass="index-button" ajax="false"/>
+                        </h:form>
+                    </div>
+                </td>
+            </tr>
+
+            <jstl:if test="${points.findAll().size() != 0}">
+                <tr>
+                    <td>x</td>
+                    <td>y</td>
+                    <td>r</td>
+                    <td>Время</td>
+                    <td>Результат</td>
+                </tr>
+
+                <jstl:forEach items="${points.findAll()}" var="point">
+                    <tr>
+                        <td>${point.getX()}</td>
+                        <td>${point.getY()}</td>
+                        <td>${point.getR()}</td>
+                        <td>${point.getDate()}</td>
+
+                        <jstl:choose>
+                            <jstl:when test="${point.getResult() == 'Лежит'}">
+                                <td class="true">${point.getResult()}</td>
+                            </jstl:when>
+
+                            <jstl:otherwise>
+                                <td class="false">${point.getResult()}</td>
+                            </jstl:otherwise>
+
+                        </jstl:choose>
+                    </tr>
+                </jstl:forEach>
+            </jstl:if>
+        </table>
+    </h:body>
+
+</html>
