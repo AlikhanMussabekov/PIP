@@ -3,6 +3,7 @@ package ru.cs.ifmo.utils;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 import ru.cs.ifmo.entities.Point;
 
 public class HibernateSessionFactoryUtil {
