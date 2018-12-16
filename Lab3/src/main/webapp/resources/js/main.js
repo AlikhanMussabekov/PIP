@@ -21,8 +21,11 @@ $(document).ready(function(){
 		y = values[1].innerText;
 		statusText = values[4].innerText;
 
-		x = x*100/r;
-		y = y*100/r;
+		var rSelect = document.getElementById("form:r");
+		var R = rSelect.options[rSelect.selectedIndex].value;
+
+		x = x*100/R;
+		y = y*100/R;
 
 		y *= -1;
 
@@ -194,6 +197,7 @@ function validate(){
 }
 
 function setR(value){
+	resetCanvas();
 	r = value;
 }
 
@@ -257,3 +261,7 @@ function changeBackground()
 
 }
 
+function resetCanvas(){
+	plot_context.clearRect(0, 0, plot_canvas.width, plot_canvas.height);
+	draw();
+}

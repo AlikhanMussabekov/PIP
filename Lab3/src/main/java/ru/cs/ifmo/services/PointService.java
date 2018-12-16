@@ -1,18 +1,15 @@
 package ru.cs.ifmo.services;
 
-import org.hibernate.service.spi.InjectService;
 import ru.cs.ifmo.DAO.PointsDAO;
 import ru.cs.ifmo.entities.Point;
 
-import javax.annotation.PostConstruct;
-import javax.faces.annotation.ManagedProperty;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
-import javax.inject.Named;
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @SessionScoped
 @ManagedBean(name = "points")
