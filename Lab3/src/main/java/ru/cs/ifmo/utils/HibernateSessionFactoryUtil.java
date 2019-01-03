@@ -19,10 +19,13 @@ public class HibernateSessionFactoryUtil {
 	public static SessionFactory getSessionFactory() {
 		if (sessionFactory == null) {
 			try {
-				Configuration configuration = new Configuration().configure();
+				/*Configuration configuration = new Configuration().configure();
 				configuration.addAnnotatedClass(Point.class);
 				StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
-				sessionFactory = configuration.buildSessionFactory(builder.build());
+				sessionFactory = configuration.buildSessionFactory(builder.build());*/
+				Configuration configuration = new Configuration();
+				configuration.configure();
+				sessionFactory = configuration.buildSessionFactory();
 
 			} catch (Exception e) {
 				//System.out.println("Исключение!" + e);

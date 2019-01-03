@@ -1,23 +1,19 @@
 package ru.cs.ifmo.controller;
 
-import net.bytebuddy.utility.RandomString;
 import ru.cs.ifmo.model.Point;
 import ru.cs.ifmo.model.User;
 import ru.cs.ifmo.utils.PointService;
 
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
 import java.util.Date;
 import java.util.List;
 
+@Stateless
 @Path("/points")
 public class PointsController {
 
@@ -27,7 +23,9 @@ public class PointsController {
 	@GET
 	public Response getAllPoints(@Context HttpServletRequest req){
 
-		if(req.getSession().getAttribute("user") == null){
+		User user = (User)req.getSession(false).getAttribute("user");
+
+		if(user == null){
 
 			String msg = "{\"msg\": \"user not logged\"}";
 
@@ -38,19 +36,66 @@ public class PointsController {
 					.build();
 		}
 
-		List<Point> points = pointService.getAllShots(req);
+		List<Point> points = pointService.getAllShots(user);
+
+		GenericEntity<List<Point>> genericEntity = new GenericEntity<List<Point>>(points){};
 
 		return Response
 				.status(Response.Status.OK)
-				.entity(points)
+				.entity(genericEntity)
+				.type(MediaType.APPLICATION_JSON)
 				.build();
 	}
 
 	@POST
 	@Path("/check")
-	public Response checkPoint(@FormParam("x") double x,@FormParam("y") double y , @FormParam("r") double r, @Context HttpServletRequest req, @Context HttpServletResponse resp){
+	public Response checkPoint(@QueryParam("x") double x, @QueryParam("y") double y , @QueryParam("r") double r, @Context HttpServletRequest req, @Context HttpServletResponse resp){
 
-		if(req.getSession().getAttribute("user") == null){
+		User user = (User)req.getSession(false).getAttribute("user");
+		String msg = "{\"msg\": \"out\"}";
+
+		if( user == null){
+
+			msg = "{\"msg\": \"user not logged\"}";
+
+			return Response
+					.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity(msg)
+					.type(MediaType.APPLICATION_JSON)
+					.build();
+		}
+
+
+		Point point = new Point(
+				x,y,r,
+				new Date(),
+				"Не лежит",
+				(User)req.getSession().getAttribute("user")
+		);
+
+
+		if(checkPoint(x,y,r)){
+			msg = "{\"msg\": \"in\"}";
+
+			point.setResult("Лежит");
+		}
+
+		pointService.addPoint(point);
+
+		return Response
+				.status(Response.Status.CREATED)
+				.entity(point)
+				.type(MediaType.APPLICATION_JSON)
+				.build();
+
+	}
+
+	@POST
+	@Path("/delete")
+	public Response deletePoint(@QueryParam("id") Integer id, @Context HttpServletRequest req){
+		User user = (User)req.getSession(false).getAttribute("user");
+
+		if(user == null){
 
 			String msg = "{\"msg\": \"user not logged\"}";
 
@@ -61,36 +106,23 @@ public class PointsController {
 					.build();
 		}
 
+		pointService.delete(id);
+		return Response
+				.status(Response.Status.OK)
+				.build();
+	}
 
-		if(x > 0 && y >0 && r>0){
-			Point point = new Point(
-					x,y,r,
-					new Date(),
-					"Лежит",
-					(User)req.getSession().getAttribute("user")
-			);
+	private boolean checkPoint(double x, double y, double r){
+		if(x < 0 && y > 0)
+			return false;
 
-			pointService.addPoint(point);
+		if(x <= 0 && y <= 0)
+			return y >= -x-r;
 
-			String msg = "{\"msg\": \"in\"}";
+		if(x >= 0 && y <= 0)
+			return x*x +y*y < (r/2)*(r/2);
 
-			return Response
-					.status(Response.Status.OK)
-					.entity(msg)
-					.type(MediaType.APPLICATION_JSON)
-					.build();
-
-		}else {
-
-			String msg = "{\"msg\": \"out\"}";
-
-			return Response
-					.status(Response.Status.INTERNAL_SERVER_ERROR)
-					.entity(msg)
-					.type(MediaType.APPLICATION_JSON)
-					.build();
-		}
-
+		return x < r && y < r/2;
 	}
 
 }

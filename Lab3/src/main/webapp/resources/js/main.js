@@ -208,11 +208,15 @@ function drawPoint(e) {
 		plot_context.fillStyle = 'white';
 		plot_context.fillRect(x, y, 5, 5);
 
+		var rSelect = document.getElementById("form:r");
+		var R = rSelect.options[rSelect.selectedIndex].value;
+
+
 		x -= 150;
 		y -= 150;
 		y *= -1;
-		x = x/100*r;
-		y = y/100*r;
+		x = x/100*R;
+		y = y/100*R;
 
 		$('#form\\:xLabel').val(x);
 		$('#form\\:yLabel').val(y);

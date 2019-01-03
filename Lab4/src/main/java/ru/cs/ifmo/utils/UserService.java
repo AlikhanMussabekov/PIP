@@ -4,10 +4,11 @@ import ru.cs.ifmo.model.User;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.persistence.*;
 import javax.transaction.Transactional;
 
-@Stateful
+@Stateless
 public class UserService {
 
 	@EJB

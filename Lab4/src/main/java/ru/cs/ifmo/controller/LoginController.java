@@ -10,6 +10,8 @@ import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
+import javax.jws.WebParam;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
@@ -17,11 +19,12 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 
+@Stateless
 @Path("/user")
-@Singleton
 public class LoginController {
 
 	private Logger logger = LoggerFactory.getLogger(LoginController.class);
@@ -40,7 +43,14 @@ public class LoginController {
 
 	@POST
 	@Path("/register")
-	public Response register(@FormParam("login") String login, @FormParam("password") String password, @Context HttpServletResponse resp, @Context HttpServletRequest req){
+	public Response register(@QueryParam("username") String login, @QueryParam("password") String password, @Context HttpServletResponse resp, @Context HttpServletRequest req){
+
+		if (login.equals("") || password.equals("")) {
+			return Response
+					.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity("No params")
+					.build();
+		}
 
 		User user = new User(login,password);
 
@@ -50,7 +60,7 @@ public class LoginController {
 			req.getSession().setAttribute("user", user);
 
 			return Response
-					.status(Response.Status.OK)
+					.status(Response.Status.CREATED)
 					.entity(user)
 					.build();
 		}
@@ -64,7 +74,14 @@ public class LoginController {
 
 	@POST
 	@Path("/login")
-	public Response login(@FormParam("login") String login, @FormParam("password") String password, @Context HttpServletResponse resp, @Context HttpServletRequest req){
+	public Response login(@QueryParam("username") String login, @QueryParam("password") String password, @Context HttpServletResponse resp, @Context HttpServletRequest req){
+
+		if (login.equals("") || password.equals("")) {
+			return Response
+					.status(Response.Status.INTERNAL_SERVER_ERROR)
+					.entity("No params")
+					.build();
+		}
 
 		User curUser = userService.assertUser(login, password);
 		if (curUser != null) {
@@ -73,7 +90,7 @@ public class LoginController {
 			String msg = "{\"msg\": \"logged in\"}";
 
 			return Response
-					.status(Response.Status.OK)
+					.status(Response.Status.CREATED)
 					.entity(msg)
 					.type(MediaType.APPLICATION_JSON)
 					.build();
@@ -98,7 +115,7 @@ public class LoginController {
 		String msg = "{\"msg\": \"logged out\"}";
 
 		return Response
-				.status(Response.Status.INTERNAL_SERVER_ERROR)
+				.status(Response.Status.OK)
 				.entity(msg)
 				.build();
 

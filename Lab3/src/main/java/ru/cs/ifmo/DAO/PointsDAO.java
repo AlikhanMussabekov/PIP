@@ -31,8 +31,6 @@ public class PointsDAO {
 
 		String query = "from ru.cs.ifmo.entities.Point p where p.sessionID = " + "'" +  sessionID + "'";
 
-		//List<Point> points = (List<Point>)session.createQuery(query).list();
-
 		List<Point> points = (List<Point>) session.createQuery(query).list();
 
 		session.close();

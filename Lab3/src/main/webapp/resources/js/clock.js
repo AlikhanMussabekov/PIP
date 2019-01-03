@@ -26,6 +26,11 @@ function showTime(){
 	document.getElementById("MyClockDisplay").innerText = time;
 	document.getElementById("MyClockDisplay").textContent = time;
 
-	setTimeout(showTime, 1000);
+	setTimeout(showTime, 8000);
 
+}
+
+function playAudio() {
+	var audio = new Audio('http://localhost:8080/Lab3/javax.faces.resource/pip.mp3.xhtml?ln=media');
+	audio.play();
 }

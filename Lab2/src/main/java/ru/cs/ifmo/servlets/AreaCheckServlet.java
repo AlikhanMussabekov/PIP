@@ -72,6 +72,5 @@ public class AreaCheckServlet extends HttpServlet {
 
 		RequestDispatcher requestDispatcher = req.getRequestDispatcher("result.jsp");
 		requestDispatcher.forward(req, resp);
-
 	}
 }

@@ -4,6 +4,7 @@ import ru.cs.ifmo.model.Point;
 import ru.cs.ifmo.model.User;
 
 import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 import java.util.List;
 
-@Stateful
+@Stateless
 public class PointService {
 
 	private EntityManagerFactory fact = Persistence.createEntityManagerFactory("JPAUNIT");
@@ -25,11 +26,15 @@ public class PointService {
 	}
 
 
-	public List<Point> getAllShots(@Context HttpServletRequest req){
+	public List<Point> getAllShots(User user){
 
-		User user = (User)req.getSession().getAttribute("user");
-
-		return  em.createQuery("from Point where user = user").getResultList();
+		return  em.createQuery("select p from Point p where p.user = :user").setParameter("user", user).getResultList();
+		//return em.createQuery("select * from Point where user = :user")
 	}
 
+	public void delete(Integer id) {
+		em.getTransaction().begin();
+		em.createQuery("delete Point p where p.id = :id").setParameter("id", id).executeUpdate();
+		em.getTransaction().commit();
+	}
 }

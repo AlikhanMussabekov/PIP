@@ -2,6 +2,7 @@ package ru.cs.ifmo.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.Date;
 
 @Entity
@@ -41,7 +42,8 @@ public class Point implements Serializable {
 	}
 
 	public double getX() {
-		return x;
+		DecimalFormat df = new DecimalFormat("#.##");
+		return Double.valueOf(df.format(x));
 	}
 
 	public void setX(double x) {
@@ -49,7 +51,8 @@ public class Point implements Serializable {
 	}
 
 	public double getY() {
-		return y;
+		DecimalFormat df = new DecimalFormat("#.##");
+		return Double.valueOf(df.format(y));
 	}
 
 	public void setY(double y) {

@@ -1,6 +1,8 @@
 body{
-	background: url("/resources/media/background-shapes.svg") no-repeat center;
-	background-size: 3000px;
+	background: url("http://localhost:8080/Lab3/javax.faces.resource/background-shapes.svg.xhtml?ln=media");
+	background-position: top;
+	background-size: 2000px;
+	background-repeat: no-repeat;
 }
 
 ul {
@@ -231,3 +233,9 @@ table.false{
 	letter-spacing: 7px;
 }
 
+.play-button{
+	background-image: url("http://localhost:8080/Lab3/javax.faces.resource/play.png.xhtml?ln=media");
+	background-repeat: no-repeat;
+	width: 100px;
+	height: 100px;
+}
