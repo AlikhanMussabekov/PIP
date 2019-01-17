@@ -6,7 +6,7 @@ import java.text.DecimalFormat;
 import java.util.Date;
 
 @Entity
-@Table(name = "point")
+@Table(name = "point"/*, schema = "s247413"*/)
 public class Point implements Serializable {
 
 	@Id
@@ -44,8 +44,9 @@ public class Point implements Serializable {
 	}
 
 	public double getX() {
-		DecimalFormat df = new DecimalFormat("#.##");
-		return Double.valueOf(df.format(x));
+		//DecimalFormat df = new DecimalFormat("#.##");
+		//return Double.valueOf(df.format(x));
+		return x;
 	}
 
 	public void setX(double x) {
@@ -53,8 +54,9 @@ public class Point implements Serializable {
 	}
 
 	public double getY() {
-		DecimalFormat df = new DecimalFormat("#.##");
-		return Double.valueOf(df.format(y));
+		//DecimalFormat df = new DecimalFormat("#.##");
+		//return Double.valueOf(df.format(y));
+		return y;
 	}
 
 	public void setY(double y) {

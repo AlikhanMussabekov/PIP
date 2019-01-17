@@ -11,9 +11,6 @@ import javax.transaction.Transactional;
 @Stateless
 public class UserService {
 
-	@EJB
-	private PasswordEncryptor encryptor;
-
 	private EntityManagerFactory fact = Persistence.createEntityManagerFactory("JPAUNIT");
 	private EntityManager em = fact.createEntityManager();
 
@@ -35,7 +32,7 @@ public class UserService {
 			try {
 				User user = (User) em.createQuery(" from User where login = :login").setParameter("login", login).getSingleResult();
 				if (!(user == null)) {
-					if (encryptor.encrypt(password).equals(user.getPassword())) {
+					if (String.valueOf(password.hashCode()).equals(user.getPassword())) {
 						return user;
 					}
 				}

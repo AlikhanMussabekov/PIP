@@ -86,7 +86,7 @@
       return {
         r: 1,
         points: [],
-        logged: false//TODO false
+        logged: false
       }
     }
   }
@@ -102,8 +102,9 @@
       grid-template-rows: max-content max-content auto;
       grid-template-areas:
         "names    group   group     var"
-        "map      map     controls  session"
-        "results  results results   results";
+        "map      map     controls  controls"
+        "results  results results   results"
+        "login    login   login     login";
     }
   }
   @media (max-width: 664px){
@@ -112,10 +113,11 @@
       grid-template-rows: max-content max-content max-content max-content auto;
       grid-template-areas:
         "names    group     var"
-        ".        .         session"
+        ".        .         ."
         "map      map       map"
         "controls controls  controls"
-        "results  results   results";
+        "results  results   results"
+        "login    login     login";
     }
   }
 </style>

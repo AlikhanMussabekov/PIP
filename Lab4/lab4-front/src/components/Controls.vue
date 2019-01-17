@@ -13,6 +13,8 @@
       <select id="rs" v-model="rt" @change="$emit('update:r', $event.target.value)">
         <option v-for="i in 4" :value="i/2">{{i/2}}</option>
       </select>
+      <br/>
+      <input type="submit" value="Submit"/>
       <div v-if="!valid" style="color: red">Y should be a number between -5 and 3</div>
     </form>
   </div>
@@ -32,7 +34,7 @@
       send () {
         if(!this.valid)
           return false;
-        axios('https://localhost:8080/Lab4/app/points/check', {
+        axios('http://localhost:8080/Lab4/app/points/check', {
           params: {
             x: this.x,
             y: this.y,
